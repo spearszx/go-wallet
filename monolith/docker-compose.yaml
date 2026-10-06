@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:18
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: spearszx
+      POSTGRES_PASSWORD: secret_pass1234
+      POSTGRES_DB: go_wallet
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - wallet_postgres_data:/var/lib/postgresql/data/pgdata
+    networks:
+      - go-wallet
+
+  pgadmin:
+    image: dpage/pgadmin4:9.8
+    ports:
+      - "5050:80"
+    networks:
+      - go-wallet
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: waves20ts@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: secret_pass1234
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    depends_on:
+      - postgres
+
+networks:
+  go-wallet:
+    driver: bridge
+
+volumes:
+  wallet_postgres_data:
+  pgadmin_data:
