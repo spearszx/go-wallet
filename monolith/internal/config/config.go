@@ -45,9 +45,6 @@ type ServerOptions struct {
 }
 
 func (Db *DbOptions) ConnectionString() string {
-	// return fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=%v",
-	// 	Db.DbUser, Db.DbPassword, Db.DbHost, Db.DbPort, Db.DbName, Db.SslMode)
-
 	return fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=disable",
 		Db.DbUser, Db.DbPassword, Db.DbHost, Db.DbPort, Db.DbName)
 

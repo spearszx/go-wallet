@@ -16,7 +16,6 @@ func main() {
 		fmt.Println(err)
 	}
 	defer pool.Close()
-	
 
 	fmt.Println("end")
 
