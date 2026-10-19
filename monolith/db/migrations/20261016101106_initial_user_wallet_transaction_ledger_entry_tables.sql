@@ -2,7 +2,8 @@
 
 CREATE TABLE users (
     id              VARCHAR(36) PRIMARY KEY,
-    full_name       VARCHAR(100) NOT NULL,
+    first_name       VARCHAR(100) NOT NULL,
+    last_name       VARCHAR(100) NOT NULL,
     email           VARCHAR(150) NOT NULL UNIQUE,
     password_hash   VARCHAR(255) NOT NULL,
     is_active       BOOLEAN NOT NULL DEFAULT TRUE,
