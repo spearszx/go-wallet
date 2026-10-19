@@ -13,7 +13,12 @@ MIGRATIONS_PATH ?= ./db/migrations
 
 DB_DSN = postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)?sslmode=disable
 
-.PHONY: build run test docker-up docker-stop migrate-up migrate-down migrate-create .env
+.PHONY: build run test docker-up docker-stop migrate-up migrate-down migrate-create .env cover
+
+cover:
+	go test -short -count=1 -race -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out
+	rm coverage.out
 
 .env:
 	@cp .env.example .env
@@ -40,7 +45,7 @@ docker-up:
 	docker-compose up -d
 
 
-docker-stop:
+docker-down:
 	docker-compose down -v
 
 

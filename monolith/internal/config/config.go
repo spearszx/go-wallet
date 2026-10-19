@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strconv"
 
 	"github.com/joho/godotenv"
@@ -58,8 +60,17 @@ func LoadConfig() *Config {
 }
 
 func initConfig() {
-	if err := godotenv.Load(); err != nil {
-		log.Printf("Warning .env file not found, using environment variables")
+
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		log.Printf("warning: cannot determine config.go path")
+	}
+
+	root := filepath.Join(filepath.Dir(filename), "..", "..")
+	envPath := filepath.Join(root, ".env")
+
+	if err := godotenv.Load(envPath); err != nil {
+		log.Printf("warning: %s not loaded: %v", envPath, err)
 	}
 
 	config = &Config{

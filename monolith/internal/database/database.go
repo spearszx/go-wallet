@@ -36,8 +36,7 @@ func NewWithRetries(config *config.DbOptions) (*pgxpool.Pool, error) {
 			}
 		}
 
-		fmt.Println(err)
-
+		fmt.Println("continuing to connect...")
 		<-ticker.C
 	}
 
